@@ -1,10 +1,15 @@
 from flask import Flask, render_template, request, redirect
 import json
 from datetime import datetime
+import os
+from pathlib import Path
 
 app = Flask(__name__)
 
-DATA_FILE = "data.json"
+# Save data in user's home directory instead of app directory
+USER_DATA_DIR = Path.home() / "BadFoodTracker"
+USER_DATA_DIR.mkdir(exist_ok=True)
+DATA_FILE = USER_DATA_DIR / "data.json"
 
 FOODS = [ 
     "Soda / Soft Drinks",
@@ -31,8 +36,11 @@ def load_data():
         return {}
 
 def save_data(data):
-    with open(DATA_FILE, "w") as f:
-        json.dump(data, f, indent=4)
+    try:
+        with open(DATA_FILE, "w") as f:
+            json.dump(data, f, indent=4)
+    except Exception as e:
+        print(f"Error saving data: {e}")
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -53,4 +61,5 @@ def summary():
     return render_template("summary.html", data=data, foods=FOODS)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # IMPORTANT: Set debug=False for production/distribution
+    app.run(debug=False, host='127.0.0.1', port=5000)
