@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Summary</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Your Tracker Summary</h1>
+
+    <a href="/" class="btn back">Add New Entry</a>
+
+    {% for date, items in data.items() %}
+    <div class="summary-block">
+        <h3>{{ date }}</h3>
+        {% if items %}
+            <ul>
+            {% for item in items %}
+                <li>{{ item }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No bad foods today! 🎉</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>

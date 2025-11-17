@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bad Food Tracker</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Daily Bad Food Tracker</h1>
+    <p>Select all the foods you ate today:</p>
+
+    <form method="POST">
+        <div class="foods-list">
+            {% for food in foods %}
+            <label class="item">
+                <input type="checkbox" name="foods" value="{{ food }}">
+                {{ food }}
+            </label>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn">Save Today</button>
+    </form>
+</div>
+
+</body>
+</html>
